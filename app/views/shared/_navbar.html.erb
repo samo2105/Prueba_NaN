@@ -9,8 +9,8 @@
         <%= link_to 'Home', root_path, class:'nav-link' %>
       </li>
       <% if user_signed_in? %>
-        <li class="nav-item">
-          <div class="nav-link">Tasks completed: <%= ToDo.where(user_id: current_user.id, completed: true).count %></div>
+        <li class="nav-item active">
+          <div class="nav-link">Tasks completed: <%= ToDo.completed_todos(current_user)%></div>
         </li>
       <% end %>
       <li class="nav-item dropdown">
@@ -19,7 +19,8 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <% if user_signed_in? %>
-            <%= link_to 'Salir', destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
+            <%= link_to 'Edit', edit_user_registration_path, class: 'dropdown-item' %>
+            <%= link_to 'Log Out', destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
           <% else %>
             <%= link_to 'Register', new_user_registration_path, class: 'dropdown-item' %>
             <%= link_to 'LogIn', new_user_session_path, class: 'dropdown-item' %>
@@ -27,7 +28,7 @@
         </div>
       </li>
       <li class="nav-item active">
-        <div class="nav-link"><%= alert %></p>
+        <div class="nav-link"><%= alert %></div>
       </li>
       <li class="nav-item active">
         <div class="nav-link"><%= notice %></div>
