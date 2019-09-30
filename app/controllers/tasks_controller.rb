@@ -11,6 +11,7 @@ class TasksController < ApplicationController
   # GET /tasks/1
   # GET /tasks/1.json
   def show
+    @all_to_dos = @task.to_dos.order(updated_at: :desc).max(10)
   end
 
   # GET /tasks/new

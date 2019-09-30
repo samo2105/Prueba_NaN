@@ -1,14 +1,24 @@
-<p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Title:</strong>
-  <%= @task.title %>
-</p>
+<div class="card mb-3">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      <img src="<%= @task.photo %>" class="card-img" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title"><%= @task.title %></h5>
+        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+      </div>
+    </div>
+  </div>
+</div>
 
-<p>
-  <strong>Photo:</strong>
-  <%= @task.photo %>
-</p>
-
-<%= link_to 'Edit', edit_task_path(@task) %> |
-<%= link_to 'Back', tasks_path %>
+<% @all_to_dos.each do |todo| %>
+  <%if todo.completed?%>
+    <div class="card text-center">
+      <%= if todo.user.name == current_user.name then 'You' else todo.user.name end %> completed this task <%= time_ago_in_words todo.updated_at %> ago
+    </div>
+  <%end %>
+<% end %>
+<br>
+<%= link_to 'Back', root_path, class: 'btn btn-primary col-sm-4' %>

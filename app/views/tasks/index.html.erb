@@ -1,7 +1,9 @@
-<p id="notice"><%= notice %></p>
+
+<h1 class="text-center">Tasks</h1>
 <% if user_signed_in? && current_user.admin? %>
-  <h1>Tasks</h1>
-  <%= link_to 'New Task', new_task_path %>
+  <br>
+  <%= link_to 'New Task', new_task_path, class:'btn btn-primary col-sm-12' %>
+  <br><br>
     <% @tasks.each_slice (3) do |tasks| %>
       <div class="card-deck">
       <% tasks.each do |task| %>
@@ -9,33 +11,39 @@
             <img src="<%= task.photo %>" class="card-img-top" alt="...">
             <div class="card-body">
               <h5 class="card-title"><%= task.title %></h5>
-              <p class="card-text"><%= link_to 'Completed' %>
-                <%= link_to 'Show', task %>
-                <%= link_to 'Edit', edit_task_path(task) %>
-                <%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></p>
-              <p class="card-text"><small class="text-muted"><%=time_ago_in_words task.updated_at %>></small></p>
+              <p class="card-text">
+                <%= link_to 'Show', task, class: 'btn btn-success' %>
+                <%= link_to 'Edit', edit_task_path(task), class: 'btn btn-warning' %>
+                <%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' }, class:'btn btn-danger' %></p>
+              <p class="card-text"><small class="text-muted">Updated <%=time_ago_in_words task.updated_at %> ago</small></p>
             </div>
           </div>
     <% end %>
       </div>
+    <br>
   <% end %>
   <% elsif user_signed_in? %>
 <h1>Tasks</h1>
-    <% current_user.todos.each_slice(3) do |todos| %>
+    <% current_user.to_dos.each_slice(3) do |todos| %>
     <div class="card-deck">
       <% todos.each do |todo| %>
         <div class="card">
-          <img src="<%= todo.photo %>" class="card-img-top" alt="...">
+          <img src="<%= todo.task.photo %>" class="card-img-top" alt="...">
           <div class="card-body">
-            <h5 class="card-title"><%= todo.title %></h5>
-            <p class="card-text"><%= link_to 'Completed' %>
-              <%= link_to 'Show', todo %>
-              <%= link_to 'Completed', todo_completed_path(todo) %>
-            <p class="card-text"><small class="text-muted"><%=time_ago_in_words todo.updated_at %></small></p>
+            <h5 class="card-title"><%= todo.task.title %></h5>
+            <p class="card-text">
+              <%= link_to 'Show', task_path(todo.task), class: 'btn btn-primary' %>
+              <% if todo.completed? %>
+                <%= link_to 'Incomplete', todo_completed_path(todo), method: :patch, class: 'btn btn-warning' %>
+              <% else %>
+                <%= link_to 'Complete', todo_completed_path(todo), method: :patch, class: 'btn btn-success' %>
+              <% end %>
+            <p class="card-text"><small class="text-muted">Updated <%=time_ago_in_words todo.updated_at %> ago</small></p>
           </div>
         </div>
       <% end %>
     </div>
+    <br>
   <% end %>
 <% else %>
   <h1>Tasks</h1>
@@ -46,15 +54,16 @@
             <img src="<%= task.photo %>" class="card-img-top" alt="...">
             <div class="card-body">
               <h5 class="card-title"><%= task.title %></h5>
-              <p class="card-text"><%= link_to 'Completed' %>
-                <%= link_to 'Show', task %>
-              <p class="card-text"><small class="text-muted"><%=time_ago_in_words task.updated_at %></small></p>
+                <%= link_to 'Show', task, class: 'btn btn-warning' %>
+              <p class="card-text"><small class="text-muted">Updated <%=time_ago_in_words task.updated_at %> ago</small></p>
             </div>
           </div>
         <% end %>
       </div>
+    <br>
     <% end %>
   <% end %>
+
 
 
 

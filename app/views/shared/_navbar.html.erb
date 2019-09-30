@@ -8,13 +8,18 @@
       <li class="nav-item active">
         <%= link_to 'Home', root_path, class:'nav-link' %>
       </li>
+      <% if user_signed_in? %>
+        <li class="nav-item">
+          <div class="nav-link">Tasks completed: <%= ToDo.where(user_id: current_user.id, completed: true).count %></div>
+        </li>
+      <% end %>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Account
+          <%= if user_signed_in? then current_user.name else 'Account' end %>
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <% if user_signed_in? %>
-            <%= link_to 'Salir', destroy_user_session_path, method: :destroy, class: 'dropdown-item' %>
+            <%= link_to 'Salir', destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
           <% else %>
             <%= link_to 'Register', new_user_registration_path, class: 'dropdown-item' %>
             <%= link_to 'LogIn', new_user_session_path, class: 'dropdown-item' %>
