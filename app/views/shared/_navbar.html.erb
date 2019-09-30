@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-danger">
   <%= link_to 'Todo_app', root_path, class: 'navbar-brand' %>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -25,6 +25,12 @@
             <%= link_to 'LogIn', new_user_session_path, class: 'dropdown-item' %>
           <% end %>
         </div>
+      </li>
+      <li class="nav-item active">
+        <div class="nav-link"><%= alert %></p>
+      </li>
+      <li class="nav-item active">
+        <div class="nav-link"><%= notice %></div>
       </li>
     </ul>
   </div>

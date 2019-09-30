@@ -1,6 +1,7 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, except: [:index]
+  before_action :filter_admin!, only: [:edit, :update, :destroy]
 
   # GET /tasks
   # GET /tasks.json
@@ -73,4 +74,10 @@ class TasksController < ApplicationController
     def task_params
       params.require(:task).permit(:title, :photo)
     end
+
+  def filter_admin!
+    authenticate_user!
+    redirect_to root_path, alert: "No tienes acceso" unless current_user.admin?
+  end
+
 end
